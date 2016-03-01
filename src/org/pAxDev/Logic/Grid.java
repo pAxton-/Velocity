@@ -32,6 +32,12 @@ public class Grid {
                     incPy = incPy + height;
                     ylop = 0;
                 }
+                if ( y == (size-1) || y == 0) {
+                    gridSquares[x][y].setGridType(GridType.BORDER);
+                }
+                if ( x == (size-1) || x == 0) {
+                    gridSquares[x][y].setGridType(GridType.BORDER);
+                }
             }
         }
     }

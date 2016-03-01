@@ -11,8 +11,18 @@ import org.pAxDev.Objects.Entity;
  */
 public class GridSquare extends Entity {
     Collision collision = new Collision();
+    private GridType gridType = GridType.EMPTY;
+
     public GridSquare(Vector3f position, Vector2f scale, Vector4f color, Type type) {
         super(position, scale, color, type);
+    }
+
+    public void setGridType(GridType gt) {
+        this.gridType = gt;
+    }
+
+    public GridType getGridType() {
+        return this.gridType;
     }
 
     public void collisionCheck(Entity ent) {

@@ -42,9 +42,8 @@ public class Game {
 	
 	
 	Entity enty;
-
 	Grid map;
-	
+	Controller controller;
 	private long lastFrame;
 		
 
@@ -61,36 +60,26 @@ public class Game {
 		screen = new Screen(options.screenWidth, options.screenHeight, options.frameCap, options.fullscreen, options.vSync, TITLE+" - "+VERSION);
 		cam1 = new Camera(new Vector2f(0,0), new Vector2f(options.screenWidth, options.screenHeight));
 		 enty =  new Entity(new Vector3f(400,300,1), new Vector2f(10,10), new Vector4f(1,1,1,1), PLAYER);
-        map = new Grid(130,65,90,120,10);
-	
+        map = new Grid(22,18.5f,options.screenWidth/5,25,40);
+	    controller = new Controller(enty, map);
 	
 	}
 	
 	public void mainLoop(){
 	
 		while(!screen.isCloseRequested()){
-			int delta = getDelta();
+
 			
 			cam1.update();
+            controller.update(getDelta());
 			enty.draw();
             for (GridSquare[] gsa : map.getGridSquares()) {
                 for (GridSquare gs : gsa) {
                     gs.drawWire();
-                    gs.collisionCheck(enty);
+                   // gs.collisionCheck(enty);
                 }
             }
-            if(Keyboard.isKeyDown(Keyboard.KEY_W)){
-                enty.setPositionY(enty.getPositionY()+1);
-            }
-            if(Keyboard.isKeyDown(Keyboard.KEY_S)){
-                enty.setPositionY(enty.getPositionY()-1);
-            }
-            if(Keyboard.isKeyDown(Keyboard.KEY_D)){
-                enty.setPositionX(enty.getPositionX()+1);
-            }
-            if(Keyboard.isKeyDown(Keyboard.KEY_A)){
-                enty.setPositionX(enty.getPositionX()-1);
-            }
+
 			if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
 				break;
 			}

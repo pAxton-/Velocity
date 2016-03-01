@@ -10,7 +10,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Documents/lwjgl-2.9.1/jar/lwjgl.jar!/" />
+          <root url="jar://C:/Program Files/Java/lwjgl/lwjgl-2.9.3/slick-util.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -19,7 +19,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Documents/lwjgl-2.9.1/jar/lwjgl_util.jar!/" />
+          <root url="jar://C:/Program Files/Java/lwjgl/lwjgl-2.9.3/jar/lwjgl.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -28,7 +28,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$USER_HOME$/Documents/lwjgl-2.9.1/jar/slick-util.jar!/" />
+          <root url="jar://C:/Program Files/Java/lwjgl/lwjgl-2.9.3/jar/lwjgl_util.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
