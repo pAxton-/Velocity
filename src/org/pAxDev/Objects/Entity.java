@@ -14,7 +14,7 @@ public class Entity {
 	
 	private Vector3f position;
 	public Vector2f scale;
-	float rot;
+	public float rot;
 	public Vector4f color;
 	Texture texture = null;
 	

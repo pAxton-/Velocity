@@ -26,6 +26,8 @@ import org.pAxDev.Util.ImgLoader;
 import org.pAxDev.Util.Options;
 import org.pAxDev.Util.Screen;
 
+import java.util.Random;
+
 
 public class Game {
 	
@@ -66,11 +68,15 @@ public class Game {
 	}
 	
 	public void mainLoop(){
-	
+
+        GridSquare[][] lgs = map.getGridSquares();
+        Random rand = new Random();
+
+        double currentTime = getTime();
+        double currentTimeB = getTime();
 		while(!screen.isCloseRequested()){
 
-			
-			cam1.update();
+            cam1.update();
             controller.update(getDelta());
 			enty.draw();
             for (GridSquare[] gsa : map.getGridSquares()) {
@@ -79,8 +85,75 @@ public class Game {
                    // gs.collisionCheck(enty);
                 }
             }
+           if(getTime() > (currentTimeB + 1000) && !controller.isGameOver()){
+                int  x = rand.nextInt(38) +1;
+                int  y = rand.nextInt(38) +1;
+               for (int i = 0; i < controller.difficulty; i++) {
+                   x = rand.nextInt(38)+1;
+                   y = rand.nextInt(38)+1;
+                   if (lgs[x][y].getGridType() != GridType.TAKEN) {
+                       lgs[x][y].color = new Vector4f(1, 0, 0, .5f);
+                       lgs[x][y].setPosition(new Vector3f(lgs[x][y].getPositionX(), lgs[x][y].getPositionY(), 4));
+                       lgs[x][y].setGridType(GridType.BLOCKER);
+                   }
+               }
+               for (int i = 0; i < 10; i++) {
+                   x = rand.nextInt(38)+1;
+                   y = rand.nextInt(38)+1;
+                   if (lgs[x][y].getGridType() != GridType.TAKEN) {
+                       lgs[x][y].color = new Vector4f(1, 1, 1, .05f);
+                       lgs[x][y].setPosition(new Vector3f(lgs[x][y].getPositionX(), lgs[x][y].getPositionY(), 1));
+                       lgs[x][y].setGridType(GridType.EMPTY);
+                   }
+                   x = rand.nextInt(38)+1;
+                   y = rand.nextInt(38)+1;
+                   if (lgs[x][y].getGridType() != GridType.TAKEN) {
+                       lgs[x][y].color = new Vector4f(1, 1, 1, .05f);
+                       lgs[x][y].setPosition(new Vector3f(lgs[x][y].getPositionX(), lgs[x][y].getPositionY(), 1));
+                       lgs[x][y].setGridType(GridType.EMPTY);
+                   }
+                   currentTimeB = getTime();
+               }
+            }
+            if(getTime() > (currentTime + 10000 ) && !controller.isGameOver()){
+               int x = rand.nextInt(38)+1;
+                int y = rand.nextInt(38)+1;
+                if (lgs[x][y].getGridType() != GridType.TAKEN) {
+                    lgs[x][y].color = new Vector4f(0, 0, 1, 1);
+                    lgs[x][y].setPosition(new Vector3f(lgs[x][y].getPositionX(), lgs[x][y].getPositionY(), 4));
+                    lgs[x][y].setGridType(GridType.TOKEN);
+                }
+                currentTime = getTime();
+            }
 
-			if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
+            if (controller.isGameOver() && getTime() > (currentTime + 10000)  && getTime() > (currentTimeB + 10000) ) {
+                for (GridSquare[] gsa : map.getGridSquares()) {
+                    for (GridSquare gs : gsa) {
+                        if (gs.getGridType() != GridType.BORDER) {
+                            gs.color = new Vector4f(1, 1, 1, .05f);
+                            gs.setPosition(new Vector3f(gs.getPositionX(), gs.getPositionY(), 1));
+                            gs.setGridType(GridType.EMPTY);
+                            controller.player.scale = new Vector2f(10, 10);
+                            controller.player.color = new Vector4f(1, 1, 1, 1);
+                            controller.player.rot = 0;
+                            controller.setGameOver(false);
+                        }
+                    }
+                }
+            }
+            if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)){
+                if (controller.difficulty == 4) {
+                    int x = rand.nextInt(38) + 1;
+                    int y = rand.nextInt(38) + 1;
+                    if (lgs[x][y].getGridType() != GridType.TAKEN) {
+                        lgs[x][y].color = new Vector4f(1, 1, 1, .05f);
+                        lgs[x][y].setPosition(new Vector3f(lgs[x][y].getPositionX(), lgs[x][y].getPositionY(), 1));
+                        lgs[x][y].setGridType(GridType.EMPTY);
+                    }
+                }
+            }
+
+            if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
 				break;
 			}
 			screen.update();
