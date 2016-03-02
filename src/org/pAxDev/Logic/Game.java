@@ -136,13 +136,14 @@ public class Game {
                             controller.player.scale = new Vector2f(10, 10);
                             controller.player.color = new Vector4f(1, 1, 1, 1);
                             controller.player.rot = 0;
+                            controller.player.setPosition(new Vector3f(screen.width/2,screen.height/2,1));
                             controller.setGameOver(false);
                         }
                     }
                 }
             }
-            if(Keyboard.isKeyDown(Keyboard.KEY_SPACE)){
-                if (controller.difficulty == 4) {
+            if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && controller.powerBoost > 0){
+                for (int i = 0; i < 90; i++) {
                     int x = rand.nextInt(38) + 1;
                     int y = rand.nextInt(38) + 1;
                     if (lgs[x][y].getGridType() != GridType.TAKEN) {
@@ -150,6 +151,10 @@ public class Game {
                         lgs[x][y].setPosition(new Vector3f(lgs[x][y].getPositionX(), lgs[x][y].getPositionY(), 1));
                         lgs[x][y].setGridType(GridType.EMPTY);
                     }
+                }
+                controller.powerBoost = controller.powerBoost - 1;
+                if (controller.powerBoost < 0) {
+                    controller.powerBoost = 0;
                 }
             }
 

@@ -6,6 +6,8 @@ import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
 import org.pAxDev.Objects.Entity;
 
+import java.util.ArrayList;
+
 /**
  * Created by Lance on 2/29/2016.
  */
@@ -16,6 +18,8 @@ public class Controller {
     private boolean gameOver = false;
     private boolean allowMove = true;
     public int difficulty = 1;
+    public int powerBoost = 0;
+    ArrayList<GridSquare> oldTakenSquare = new ArrayList<>();
     public Controller(Entity player, Grid map) {
         this.player = player;
         this.map = map;
@@ -58,6 +62,15 @@ public class Controller {
                     allowMove = true;
                 }
                 if (gs.collision.isColliding(player) && (gs.getGridType() == GridType.TOKEN)) {
+                    for (GridSquare os : oldTakenSquare) {
+
+                            if (gs != os) {
+                                powerBoost = powerBoost +1;
+                                oldTakenSquare.add(gs);
+                            }
+
+                    }
+
                     gs.setGridType(GridType.TAKEN);
                     gs.color = new Vector4f(0,1,0,1);
                     gs.setPosition(new Vector3f(gs.getPositionX(),gs.getPositionY(),5));
