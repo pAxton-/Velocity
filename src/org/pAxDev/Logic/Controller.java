@@ -18,6 +18,7 @@ public class Controller {
     private boolean gameOver = false;
     private boolean allowMove = true;
     public int difficulty = 1;
+    int raiseDif = 0;
     public int powerBoost = 0;
     ArrayList<GridSquare> oldTakenSquare = new ArrayList<>();
     public Controller(Entity player, Grid map) {
@@ -74,7 +75,11 @@ public class Controller {
                     gs.setGridType(GridType.TAKEN);
                     gs.color = new Vector4f(0,1,0,1);
                     gs.setPosition(new Vector3f(gs.getPositionX(),gs.getPositionY(),5));
-                    difficulty++;
+                    raiseDif++;
+                    if (raiseDif == 8) {
+                        difficulty++;
+                        raiseDif = 0;
+                    }
                 }
                 if ((gs.collision.isColliding(player) && (gs.getGridType() == GridType.BORDER)) || (gs.collision.isColliding(player) && (gs.getGridType() == GridType.BLOCKER))) {
                     player.color = new Vector4f(1,0,0,1);

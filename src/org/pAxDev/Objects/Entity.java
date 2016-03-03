@@ -94,8 +94,8 @@ public class Entity {
         glRotatef(rot, 0, 0, 1);
         glScalef(scale.x, scale.y, 0);
         glColor4f(color.x, color.y, color.z, color.w);
-        glBegin(GL_LINES);
-
+       // glBegin(GL_LINES);
+        glBegin(GL_POLYGON);
         glVertex2f(-0.5f, -0.5f);
         glVertex2f(-0.5f, 0.5f);
 

@@ -41,11 +41,12 @@ public class Game {
 	ImgLoader imgLoader = new ImgLoader();
 	Screen screen;
 	Camera cam1;
-	
+	GameState gameState = GameState.MENU;
 	
 	Entity enty;
 	Grid map;
 	Controller controller;
+    LevelLogic lvl1;
 	private long lastFrame;
 		
 
@@ -61,7 +62,7 @@ public class Game {
 		
 		screen = new Screen(options.screenWidth, options.screenHeight, options.frameCap, options.fullscreen, options.vSync, TITLE+" - "+VERSION);
 		cam1 = new Camera(new Vector2f(0,0), new Vector2f(options.screenWidth, options.screenHeight));
-		 enty =  new Entity(new Vector3f(400,300,1), new Vector2f(10,10), new Vector4f(1,1,1,1), PLAYER);
+		 enty =  new Entity(new Vector3f(screen.width/2,screen.height/2,5), new Vector2f(10,10), new Vector4f(1,1,1,1), PLAYER);
         map = new Grid(22,18.5f,options.screenWidth/5,25,40);
 	    controller = new Controller(enty, map);
 	
@@ -74,89 +75,23 @@ public class Game {
 
         double currentTime = getTime();
         double currentTimeB = getTime();
+        lvl1 = new LevelLogic(controller, enty, map, lgs, rand, currentTime, currentTimeB);
 		while(!screen.isCloseRequested()){
 
             cam1.update();
-            controller.update(getDelta());
-			enty.draw();
-            for (GridSquare[] gsa : map.getGridSquares()) {
-                for (GridSquare gs : gsa) {
-                    gs.drawWire();
-                   // gs.collisionCheck(enty);
-                }
-            }
-           if(getTime() > (currentTimeB + 1000) && !controller.isGameOver()){
-                int  x = rand.nextInt(38) +1;
-                int  y = rand.nextInt(38) +1;
-               for (int i = 0; i < controller.difficulty; i++) {
-                   x = rand.nextInt(38)+1;
-                   y = rand.nextInt(38)+1;
-                   if (lgs[x][y].getGridType() != GridType.TAKEN) {
-                       lgs[x][y].color = new Vector4f(1, 0, 0, .5f);
-                       lgs[x][y].setPosition(new Vector3f(lgs[x][y].getPositionX(), lgs[x][y].getPositionY(), 4));
-                       lgs[x][y].setGridType(GridType.BLOCKER);
-                   }
-               }
-               for (int i = 0; i < 10; i++) {
-                   x = rand.nextInt(38)+1;
-                   y = rand.nextInt(38)+1;
-                   if (lgs[x][y].getGridType() != GridType.TAKEN) {
-                       lgs[x][y].color = new Vector4f(1, 1, 1, .05f);
-                       lgs[x][y].setPosition(new Vector3f(lgs[x][y].getPositionX(), lgs[x][y].getPositionY(), 1));
-                       lgs[x][y].setGridType(GridType.EMPTY);
-                   }
-                   x = rand.nextInt(38)+1;
-                   y = rand.nextInt(38)+1;
-                   if (lgs[x][y].getGridType() != GridType.TAKEN) {
-                       lgs[x][y].color = new Vector4f(1, 1, 1, .05f);
-                       lgs[x][y].setPosition(new Vector3f(lgs[x][y].getPositionX(), lgs[x][y].getPositionY(), 1));
-                       lgs[x][y].setGridType(GridType.EMPTY);
-                   }
-                   currentTimeB = getTime();
-               }
-            }
-            if(getTime() > (currentTime + 10000 ) && !controller.isGameOver()){
-               int x = rand.nextInt(38)+1;
-                int y = rand.nextInt(38)+1;
-                if (lgs[x][y].getGridType() != GridType.TAKEN) {
-                    lgs[x][y].color = new Vector4f(0, 0, 1, 1);
-                    lgs[x][y].setPosition(new Vector3f(lgs[x][y].getPositionX(), lgs[x][y].getPositionY(), 4));
-                    lgs[x][y].setGridType(GridType.TOKEN);
-                }
-                currentTime = getTime();
+            switch (gameState){
+
+                case MENU:
+                    if(Keyboard.isKeyDown(Keyboard.KEY_RETURN)){
+                        gameState = GameState.PLAYING;
+                        break;
+                    }
+                    break;
+                case PLAYING:
+                    lvl1.levelUpdate(getDelta());
+                    break;
             }
 
-            if (controller.isGameOver() && getTime() > (currentTime + 10000)  && getTime() > (currentTimeB + 10000) ) {
-                for (GridSquare[] gsa : map.getGridSquares()) {
-                    for (GridSquare gs : gsa) {
-                        if (gs.getGridType() != GridType.BORDER) {
-                            gs.color = new Vector4f(1, 1, 1, .05f);
-                            gs.setPosition(new Vector3f(gs.getPositionX(), gs.getPositionY(), 1));
-                            gs.setGridType(GridType.EMPTY);
-                            controller.player.scale = new Vector2f(10, 10);
-                            controller.player.color = new Vector4f(1, 1, 1, 1);
-                            controller.player.rot = 0;
-                            controller.player.setPosition(new Vector3f(screen.width/2,screen.height/2,1));
-                            controller.setGameOver(false);
-                        }
-                    }
-                }
-            }
-            if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && controller.powerBoost > 0){
-                for (int i = 0; i < 90; i++) {
-                    int x = rand.nextInt(38) + 1;
-                    int y = rand.nextInt(38) + 1;
-                    if (lgs[x][y].getGridType() != GridType.TAKEN) {
-                        lgs[x][y].color = new Vector4f(1, 1, 1, .05f);
-                        lgs[x][y].setPosition(new Vector3f(lgs[x][y].getPositionX(), lgs[x][y].getPositionY(), 1));
-                        lgs[x][y].setGridType(GridType.EMPTY);
-                    }
-                }
-                controller.powerBoost = controller.powerBoost - 1;
-                if (controller.powerBoost < 0) {
-                    controller.powerBoost = 0;
-                }
-            }
 
             if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
 				break;
@@ -168,6 +103,7 @@ public class Game {
 	public void close(){
 		screen.destroy();
 	}
+
 	
 	public static void main(String[] args) {
 		game = new Game();
@@ -189,5 +125,7 @@ public class Game {
 		public long getTime() {
 		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 		}
+
+
 
 }
