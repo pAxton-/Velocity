@@ -42,13 +42,14 @@ public class Game {
 	Screen screen;
 	Camera cam1;
 	GameState gameState = GameState.MENU;
-	
+	MainMenu mMenu;
 	Entity enty;
 	Grid map;
 	Controller controller;
     LevelLogic lvl1;
 	private long lastFrame;
-		
+
+    boolean closeProgram = false;
 
 	
 	public void updateOptions(){
@@ -64,6 +65,7 @@ public class Game {
 		cam1 = new Camera(new Vector2f(0,0), new Vector2f(options.screenWidth, options.screenHeight));
 		 enty =  new Entity(new Vector3f(screen.width/2,screen.height/2,5), new Vector2f(10,10), new Vector4f(1,1,1,1), PLAYER);
         map = new Grid(22,18.5f,options.screenWidth/5,25,40);
+		mMenu = new MainMenu(new Vector3f(screen.width/2,screen.height/2,1));
 	    controller = new Controller(enty, map);
 	
 	}
@@ -82,18 +84,27 @@ public class Game {
             switch (gameState){
 
                 case MENU:
-                    if(Keyboard.isKeyDown(Keyboard.KEY_RETURN)){
+                    mMenu.update();
+                    if(mMenu.startGame()) {
                         gameState = GameState.PLAYING;
-                        break;
+                        lvl1.endGame = false;
                     }
+                        if (mMenu.exitGame()){
+                            closeProgram = true;
+                        }
+
                     break;
                 case PLAYING:
-                    lvl1.levelUpdate(getDelta());
+                    if(!lvl1.endGame) {
+                        lvl1.levelUpdate(getDelta());
+                    } else {
+                        gameState = GameState.MENU;
+                    }
                     break;
             }
 
 
-            if(Keyboard.isKeyDown(Keyboard.KEY_ESCAPE)){
+            if(closeProgram){
 				break;
 			}
 			screen.update();

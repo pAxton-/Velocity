@@ -16,7 +16,7 @@ public class Entity {
 	public Vector2f scale;
 	public float rot;
 	public Vector4f color;
-	Texture texture = null;
+	public Texture texture = null;
 	
 	
 	
@@ -94,8 +94,8 @@ public class Entity {
         glRotatef(rot, 0, 0, 1);
         glScalef(scale.x, scale.y, 0);
         glColor4f(color.x, color.y, color.z, color.w);
-       // glBegin(GL_LINES);
-        glBegin(GL_POLYGON);
+        glBegin(GL_LINES);
+
         glVertex2f(-0.5f, -0.5f);
         glVertex2f(-0.5f, 0.5f);
 
@@ -113,25 +113,82 @@ public class Entity {
 
 
 	}
-	
+
+	public void drawTri(){
+		glDisable(GL_TEXTURE_2D);
+		glPushMatrix();
+		glTranslatef(position.x, position.y, position.z);
+		glRotatef(rot, 0, 0, 1);
+		glScalef(scale.x, scale.y, 0);
+		glColor4f(color.x, color.y, color.z, color.w);
+		glBegin(GL_POLYGON);
+
+		glVertex2f(-0.5f, -0.5f);
+	//	glVertex2f(-0.5f, 0.5f);
+
+		glVertex2f(-0.5f, -0.5f);
+	//	glVertex2f(0.5f, -0.5f);
+
+		glVertex2f(0.5f, 0.5f);
+	//	glVertex2f(0.5f, -0.5f);
+
+		glVertex2f(-0.5f, 0.5f);
+	//	glVertex2f(0.5f, 0.5f);
+
+		glEnd();
+		glPopMatrix();
+
+
+	}
+
+	public void drawPoly(){
+		glDisable(GL_TEXTURE_2D);
+		glPushMatrix();
+		glTranslatef(position.x, position.y, position.z);
+		glRotatef(rot, 0, 0, 1);
+		glScalef(scale.x, scale.y, 0);
+		glColor4f(color.x, color.y, color.z, color.w);
+
+		glBegin(GL_POLYGON);
+
+		glVertex2f(-0.5f, -0.5f);
+
+		glVertex2f(0.5f, -0.5f);
+
+		glVertex2f(0.5f, 0.5f);
+
+		glVertex2f(-0.5f, 0.5f);
+
+
+		glEnd();
+		glPopMatrix();
+
+
+	}
+
+
 	public void drawTextured(){
 		glPushMatrix();
 		glTranslatef(getPositionX(), getPositionY(), getPositionZ());
 		glRotatef(rot, 0, 0, 1);
 		glScalef(scale.x, scale.y, 0);
 		glColor4f(color.x, color.y, color.z, color.w);
-		
+
 		texture.bind();
 		
-		glBegin(GL_QUADS);
+		glBegin(GL_POLYGON);
 			glTexCoord2f(0, 0);
-			glVertex3f(-0.5f, -0.5f, 0);
-			glTexCoord2f(0, 1);
-			glVertex3f(-0.5f, 0.5f, 0);
-			glTexCoord2f(1, 1);
-			glVertex3f(0.5f, 0.5f, 0);
+			//glVertex3f(-0.5f, -0.5f, 0);
+        glVertex3f(-.5f, .5f, 0);
 			glTexCoord2f(1, 0);
-			glVertex3f(0.5f, -0.5f, 0);
+			//glVertex3f(-0.5f, 0.5f, 0);
+        glVertex3f(.5f, .5f, 0);
+			glTexCoord2f(1, 1);
+			//glVertex3f(0.5f, 0.5f, 0);
+        glVertex3f(.5f, -.5f, 0);
+			glTexCoord2f(0, 1);
+			//glVertex3f(0.5f, -0.5f, 0);
+        glVertex3f(-.5f, -.5f, 0);
 		glEnd();
 		
 		

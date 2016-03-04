@@ -18,6 +18,7 @@ public class LevelLogic {
     Grid map;
     GridSquare[][] lgs;
     Random rand;
+    public boolean endGame = false;
     double currentTime, currentTimeB;
     public LevelLogic(Controller controller, Entity enty, Grid map, GridSquare[][] lgs, Random rand, double currentTime, double currentTimeB) {
         this.lgs = lgs;
@@ -30,11 +31,32 @@ public class LevelLogic {
     }
 
     public void levelUpdate(int delta) {
+        if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) ) {
+            endGame = true;
+            for (GridSquare[] gsa : map.getGridSquares()) {
+                for (GridSquare gs : gsa) {
+                    if (gs.getGridType() != GridType.BORDER) {
+                        gs.color = new Vector4f(1, 1, 1, .05f);
+                        gs.setPosition(new Vector3f(gs.getPositionX(), gs.getPositionY(), 1));
+                        gs.setGridType(GridType.EMPTY);
+                        controller.player.scale = new Vector2f(10, 10);
+                        controller.player.color = new Vector4f(1, 1, 1, 1);
+                        controller.player.rot = 0;
+                        controller.player.setPosition(new Vector3f(700,400,5));
+                        controller.setGameOver(false);
+                    }
+                }
+            }
+        }
         controller.update(delta);
         enty.draw();
         for (GridSquare[] gsa : map.getGridSquares()) {
             for (GridSquare gs : gsa) {
-                gs.drawWire();
+                if (gs.getGridType() != GridType.EMPTY) {
+                    gs.drawPoly();
+                } else {
+                    gs.drawTri();
+                }
                 // gs.collisionCheck(enty);
             }
         }
@@ -81,7 +103,7 @@ public class LevelLogic {
             currentTime = getTime();
         }
 
-        if (controller.isGameOver() && getTime() > (currentTime + 10000/controller.difficulty)  && getTime() > (currentTimeB + 10000/controller.difficulty) ) {
+        if (controller.isGameOver() && getTime() > (currentTime + 10000)  && getTime() > (currentTimeB + 10000) ) {
             for (GridSquare[] gsa : map.getGridSquares()) {
                 for (GridSquare gs : gsa) {
                     if (gs.getGridType() != GridType.BORDER) {
