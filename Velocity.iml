@@ -7,28 +7,28 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://C:/Program Files/Java/lwjgl/lwjgl-2.9.3/slick-util.jar!/" />
+          <root url="jar://$USER_HOME$/Documents/lwjgl-2.9.1/jar/lwjgl.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://C:/Program Files/Java/lwjgl/lwjgl-2.9.3/jar/lwjgl.jar!/" />
+          <root url="jar://$USER_HOME$/Documents/lwjgl-2.9.1/jar/lwjgl_util.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
-          <root url="jar://C:/Program Files/Java/lwjgl/lwjgl-2.9.3/jar/lwjgl_util.jar!/" />
+          <root url="jar://$USER_HOME$/Documents/slick-util/lib/slick-util.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

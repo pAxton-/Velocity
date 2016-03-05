@@ -47,7 +47,7 @@ public class LevelLogic {
                         gs.color = new Vector4f(1, 1, 1, .05f);
                         gs.setPosition(new Vector3f(gs.getPositionX(), gs.getPositionY(), 1));
                         gs.setGridType(GridType.EMPTY);
-                        controller.player.scale = new Vector2f(10, 10);
+                        controller.player.scale = new Vector2f(40, 40);
                         controller.player.color = new Vector4f(1, 1, 1, 1);
                         controller.player.rot = 0;
                         controller.player.setPosition(new Vector3f(700,400,5));
@@ -57,25 +57,30 @@ public class LevelLogic {
             }
         }
         controller.update(delta);
-        enty.drawSprite();
+
         for (GridSquare[] gsa : map.getGridSquares()) {
             for (GridSquare gs : gsa) {
                 switch (gs.getGridType()) {
 
                     case BLOCKER:
                         gs.drawPoly();
+
                         break;
                     case BORDER:
                         gs.drawPoly();
+
                         break;
                     case EMPTY:
                         gs.drawTri();
+
                         break;
                     case TOKEN:
                         gs.drawTextured();
+
                         break;
                     case TAKEN:
                         gs.drawPoly();
+
                         break;
                 }
                 /*
@@ -89,6 +94,7 @@ public class LevelLogic {
                 */
 
             }
+
 
         }
         if(getTime() > (currentTimeB + 1000/controller.difficulty) && !controller.isGameOver()){
@@ -128,7 +134,7 @@ public class LevelLogic {
                 int y = rand.nextInt(gridSize) + 1;
                 if (lgs[x][y].getGridType() != GridType.TAKEN) {
                     lgs[x][y].color = new Vector4f(1, 1, 1, 1);
-                    lgs[x][y].setPosition(new Vector3f(lgs[x][y].getPositionX(), lgs[x][y].getPositionY(), 4));
+                    lgs[x][y].setPosition(new Vector3f(lgs[x][y].getPositionX(), lgs[x][y].getPositionY(), 1));
                     lgs[x][y].setGridType(GridType.TOKEN);
                 }
             }
@@ -142,7 +148,7 @@ public class LevelLogic {
                         gs.color = new Vector4f(1, 1, 1, .05f);
                         gs.setPosition(new Vector3f(gs.getPositionX(), gs.getPositionY(), 1));
                         gs.setGridType(GridType.EMPTY);
-                        controller.player.scale = new Vector2f(10, 10);
+                        controller.player.scale = new Vector2f(40, 40);
                         controller.player.color = new Vector4f(1, 1, 1, 1);
                         controller.player.rot = 0;
                         controller.player.setPosition(new Vector3f(700,400,5));
@@ -166,7 +172,7 @@ public class LevelLogic {
                 controller.powerBoost = 0;
             }
         }
-
+        enty.drawSprite();
     }
     public long getTime() {
         return (Sys.getTime() * 1000) / Sys.getTimerResolution();

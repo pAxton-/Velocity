@@ -116,6 +116,7 @@ public class Entity {
 
 	public void drawTri(){
 		glDisable(GL_TEXTURE_2D);
+
 		glPushMatrix();
 		glTranslatef(position.x, position.y, position.z);
 		glRotatef(rot, 0, 0, 1);
@@ -143,6 +144,7 @@ public class Entity {
 
 	public void drawPoly(){
 		glDisable(GL_TEXTURE_2D);
+
 		glPushMatrix();
 		glTranslatef(position.x, position.y, position.z);
 		glRotatef(rot, 0, 0, 1);
@@ -168,6 +170,8 @@ public class Entity {
 
 
 	public void drawTextured(){
+        glEnable(GL_BLEND);
+        glEnable(GL_TEXTURE_2D);
 		glPushMatrix();
 		glTranslatef(getPositionX(), getPositionY(), getPositionZ());
 		glRotatef(rot, 0, 0, 1);
@@ -193,19 +197,27 @@ public class Entity {
 		
 		
 	glPopMatrix();
+      //  glDisable(GL_BLEND);
+
 	}
 	public void drawSprite(){
-		
-	     
-		
-		glPushMatrix();
+
+
+        glEnable(GL_DEPTH_TEST);
+        glEnable(GL_TEXTURE_2D);
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+
+
+        glPushMatrix();
 	
 		glTranslatef(getPositionX(), getPositionY(), getPositionZ());
 		glRotatef(rot, 0, 0, 1);
 		glScalef(scale.x, scale.y, 0);
 		glColor4f(color.x, color.y, color.z, color.w);
-		
-		
+
+
 		texture.bind();
 		
 		
@@ -232,6 +244,7 @@ public class Entity {
 		
 		
 	glPopMatrix();
+      //  glDisable(GL_BLEND);
 	
 	}
 	

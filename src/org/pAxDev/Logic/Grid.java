@@ -37,12 +37,12 @@ public class Grid {
                 if ( y == (size-1) || y == 0) {
                     gridSquares[x][y].setGridType(GridType.BORDER);
                     gridSquares[x][y].color = new Vector4f(1,0,1,.5f);
-                    gridSquares[x][y].setPosition(new Vector3f(gridSquares[x][y].getPositionX(), gridSquares[x][y].getPositionY(), 5));
+                    gridSquares[x][y].setPosition(new Vector3f(gridSquares[x][y].getPositionX(), gridSquares[x][y].getPositionY(), 3));
                 }
                 if ( x == (size-1) || x == 0) {
                     gridSquares[x][y].setGridType(GridType.BORDER);
                     gridSquares[x][y].color = new Vector4f(1,0,1,.5f);
-                    gridSquares[x][y].setPosition(new Vector3f(gridSquares[x][y].getPositionX(), gridSquares[x][y].getPositionY(), 5));
+                    gridSquares[x][y].setPosition(new Vector3f(gridSquares[x][y].getPositionX(), gridSquares[x][y].getPositionY(), 3));
                 }
             }
         }

@@ -36,16 +36,24 @@ public class Controller {
 
     private void input(int delta) {
         if(Keyboard.isKeyDown(Keyboard.KEY_W)){
-            player.setPositionY(player.getPositionY() + ((.1f * delta) / 2));
+            player.setPositionY(player.getPositionY() + ((.3f * delta) / 2));
+           player.inc = player.inc + .25f;
+            player.rot = 180;
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_S)){
-            player.setPositionY(player.getPositionY() - ((.1f * delta) / 2));
+            player.setPositionY(player.getPositionY() - ((.3f * delta) / 2));
+            player.inc = player.inc + .25f;
+            player.rot = 0;
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_D)){
-            player.setPositionX(player.getPositionX() + ((.1f * delta) / 2));
+            player.setPositionX(player.getPositionX() + ((.3f * delta) / 2));
+            player.inc = player.inc + .25f;
+            player.rot = 90;
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_A)){
-            player.setPositionX(player.getPositionX() - ((.1f * delta) / 2));
+            player.setPositionX(player.getPositionX() - ((.3f * delta) / 2));
+            player.inc = player.inc + .25f;
+            player.rot = -90;
         }
     }
     public void update(int delta) {
@@ -77,10 +85,10 @@ public class Controller {
                     gs.setGridType(GridType.TAKEN);
                     sound.playTakenSound();
                     gs.color = new Vector4f(0,1,0,1);
-                    gs.setPosition(new Vector3f(gs.getPositionX(),gs.getPositionY(),5));
+                    gs.setPosition(new Vector3f(gs.getPositionX(),gs.getPositionY(),4));
                     raiseDif++;
-                    if (raiseDif == 20) {
-                       // difficulty++;
+                    if (raiseDif == 4) {
+                        //difficulty++;
                         raiseDif = 0;
                     }
                 }

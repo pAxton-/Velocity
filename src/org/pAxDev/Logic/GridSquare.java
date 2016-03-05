@@ -19,7 +19,7 @@ public class GridSquare extends Entity {
 
     public GridSquare(Vector3f position, Vector2f scale, Vector4f color, Type type) {
         super(position, scale, color, type);
-       texture = il.loadTexture("honey.png", "PNG");
+       texture = il.loadTexture("src/res/honey.png", "PNG");
     }
 
     public void setGridType(GridType gt) {

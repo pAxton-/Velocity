@@ -30,27 +30,27 @@ public class Sounds {
     }
 
     public void init() throws FileNotFoundException {
-        WaveData data = WaveData.create(new BufferedInputStream(new FileInputStream("playb.wav")));
+        WaveData data = WaveData.create(new BufferedInputStream(new FileInputStream("src/res/playb.wav")));
         buffer = alGenBuffers();
         alBufferData(buffer, data.format, data.data, data.samplerate);
         data.dispose();
         playButtonSource = alGenSources();
         alSourcei(playButtonSource,AL_BUFFER, buffer);
-        WaveData changeData = WaveData.create(new BufferedInputStream(new FileInputStream("squareChange.wav")));
+        WaveData changeData = WaveData.create(new BufferedInputStream(new FileInputStream("src/res/squareChange.wav")));
         bufferChange = alGenBuffers();
         alBufferData(bufferChange, changeData.format, changeData.data, changeData.samplerate);
         changeData.dispose();
         getSquareSource = alGenSources();
         alSourcei(getSquareSource,AL_BUFFER, bufferChange);
 
-        WaveData takenData = WaveData.create(new BufferedInputStream(new FileInputStream("taken.wav")));
+        WaveData takenData = WaveData.create(new BufferedInputStream(new FileInputStream("src/res/taken.wav")));
         bufferTaken = alGenBuffers();
         alBufferData(bufferTaken, takenData.format, takenData.data, takenData.samplerate);
         takenData.dispose();
         playTakenSource = alGenSources();
         alSourcei(playTakenSource,AL_BUFFER, bufferTaken);
 
-        WaveData loseData = WaveData.create(new BufferedInputStream(new FileInputStream("lose.wav")));
+        WaveData loseData = WaveData.create(new BufferedInputStream(new FileInputStream("src/res/lose.wav")));
         bufferLose = alGenBuffers();
 
         alBufferData(bufferLose, loseData.format, loseData.data, loseData.samplerate);

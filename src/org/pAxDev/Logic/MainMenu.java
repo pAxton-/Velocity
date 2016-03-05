@@ -23,8 +23,8 @@ public class MainMenu {
 
         startButton = new Entity(pos, new Vector2f(150,100),new Vector4f(1,1,1,1), null );
         quitButton = new Entity(new Vector3f(pos.x,pos.y-150,pos.z), new Vector2f(150,100),new Vector4f(1,1,1,1), null );
-        Texture sbTex = il.loadTexture("start.png", "PNG");
-        Texture qbTex = il.loadTexture("quit.png", "PNG");
+        Texture sbTex = il.loadTexture("src/res/start.png", "PNG");
+        Texture qbTex = il.loadTexture("src/res/quit.png", "PNG");
         startButton.texture = sbTex;
         quitButton.texture = qbTex;
 

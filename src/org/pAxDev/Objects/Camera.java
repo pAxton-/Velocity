@@ -22,10 +22,11 @@ public class Camera {
 		glMatrixMode(GL_MODELVIEW);
 		glViewport((int)-position.x, (int)-position.y, (int)scale.x, (int)scale.y);
 		
-		glEnable(GL_DEPTH_TEST);
-		glEnable(GL_TEXTURE_2D);
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		//glEnable(GL_DEPTH_TEST);
+		//glEnable(GL_TEXTURE_2D);
+		//glEnable(GL_BLEND);
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	}
 	
 	public void update(){

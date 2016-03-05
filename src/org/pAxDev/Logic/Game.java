@@ -54,10 +54,11 @@ public class Game {
     boolean closeProgram = false;
 	private Grid amp2;
     Texture playerTex;
+	private Grid map2;
 
 	public void updateOptions(){
 		
-		options.readFile("options.cfg");
+		options.readFile("src/res/options.cfg");
 		
 		
 	}
@@ -68,11 +69,12 @@ public class Game {
 		cam1 = new Camera(new Vector2f(0,0), new Vector2f(options.screenWidth, options.screenHeight));
         sound = new Sounds();
         enty =  new Entity(new Vector3f(screen.width/2,screen.height/2,5), new Vector2f(40,40), new Vector4f(1,1,1,1), PLAYER);
-        playerTex = imgLoader.loadTexture("badgerSpriteSheet.png", "PNG");
+        playerTex = imgLoader.loadTexture("src/res/badgerSpreadSheet.png", "PNG");
         enty.texture = playerTex;
         map = new Grid(22,18.5f,options.screenWidth/5,25,40);
+		map2 = new Grid(44,37f,options.screenWidth/6,25,20);
 		mMenu = new MainMenu(new Vector3f(screen.width/2,screen.height/2,1));
-	    controller = new Controller(enty, map, sound);
+	    controller = new Controller(enty, map2, sound);
         try {
             sound.init();
         } catch (FileNotFoundException e) {
@@ -83,12 +85,12 @@ public class Game {
 	
 	public void mainLoop(){
 
-        GridSquare[][] lgs = map.getGridSquares();
+        GridSquare[][] lgs = map2.getGridSquares();
         Random rand = new Random();
 
         double currentTime = getTime();
         double currentTimeB = getTime();
-        lvl1 = new LevelLogic(sound,controller, enty, map, lgs, rand, currentTime, currentTimeB);
+        lvl1 = new LevelLogic(sound,controller, enty, map2, lgs, rand, currentTime, currentTimeB);
 		while(!screen.isCloseRequested()){
 
             cam1.update();
