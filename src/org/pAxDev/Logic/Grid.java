@@ -9,6 +9,7 @@ import org.lwjgl.util.vector.Vector4f;
  */
 public class Grid {
     private GridSquare[][] gridSquares;
+    private int size;
 
     public Grid(float _width, float _height, float _incPx, float _incPy, int size) {
         gridSquares = new GridSquare[size][size];
@@ -16,6 +17,7 @@ public class Grid {
         float height = _height;
         float incPx = _incPx;
         float incPy = _incPy;
+        this.size = size;
         int ylop = 0;
         for (int x = 0; x < size; x++) {
             for (int y = 0; y < size; y++) {
@@ -45,7 +47,9 @@ public class Grid {
             }
         }
     }
-
+    public int getSize() {
+        return size;
+    }
     public GridSquare[][] getGridSquares() {
         return gridSquares;
     }

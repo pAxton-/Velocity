@@ -18,6 +18,7 @@ public class LevelLogic {
     Grid map;
     GridSquare[][] lgs;
     Random rand;
+    int gridSize;
     public boolean endGame = false;
     double currentTime, currentTimeB;
     public LevelLogic(Controller controller, Entity enty, Grid map, GridSquare[][] lgs, Random rand, double currentTime, double currentTimeB) {
@@ -28,6 +29,7 @@ public class LevelLogic {
         this.controller = controller;
         this.enty = enty;
         this.map = map;
+        gridSize = map.getSize()-2;
     }
 
     public void levelUpdate(int delta) {
@@ -52,7 +54,7 @@ public class LevelLogic {
         enty.draw();
         for (GridSquare[] gsa : map.getGridSquares()) {
             for (GridSquare gs : gsa) {
-                if (gs.getGridType() != GridType.EMPTY) {
+                    if (gs.getGridType() != GridType.EMPTY) {
                     gs.drawPoly();
                 } else {
                     gs.drawTri();
@@ -64,8 +66,8 @@ public class LevelLogic {
             int  x = rand.nextInt(38) +1;
             int  y = rand.nextInt(38) +1;
             for (int i = 0; i < 8; i++) {
-                x = rand.nextInt(38)+1;
-                y = rand.nextInt(38)+1;
+                x = rand.nextInt(gridSize)+1;
+                y = rand.nextInt(gridSize)+1;
                 if (lgs[x][y].getGridType() != GridType.TAKEN) {
                     lgs[x][y].color = new Vector4f(1, 0, 0, .5f);
                     lgs[x][y].setPosition(new Vector3f(lgs[x][y].getPositionX(), lgs[x][y].getPositionY(), 4));
@@ -73,15 +75,15 @@ public class LevelLogic {
                 }
             }
             for (int i = 0; i < 20; i++) {
-                x = rand.nextInt(38)+1;
-                y = rand.nextInt(38)+1;
+                x = rand.nextInt(gridSize)+1;
+                y = rand.nextInt(gridSize)+1;
                 if (lgs[x][y].getGridType() != GridType.TAKEN) {
                     lgs[x][y].color = new Vector4f(1, 1, 1, .05f);
                     lgs[x][y].setPosition(new Vector3f(lgs[x][y].getPositionX(), lgs[x][y].getPositionY(), 1));
                     lgs[x][y].setGridType(GridType.EMPTY);
                 }
-                x = rand.nextInt(38)+1;
-                y = rand.nextInt(38)+1;
+                x = rand.nextInt(gridSize)+1;
+                y = rand.nextInt(gridSize)+1;
                 if (lgs[x][y].getGridType() != GridType.TAKEN) {
                     lgs[x][y].color = new Vector4f(1, 1, 1, .05f);
                     lgs[x][y].setPosition(new Vector3f(lgs[x][y].getPositionX(), lgs[x][y].getPositionY(), 1));
@@ -91,9 +93,9 @@ public class LevelLogic {
             }
         }
         if(getTime() > (currentTime + 1000/controller.difficulty ) && !controller.isGameOver()){
-            for (int i = 0; i < 4; i++) {
-                int x = rand.nextInt(38) + 1;
-                int y = rand.nextInt(38) + 1;
+            for (int i = 0; i < 10; i++) {
+                int x = rand.nextInt(gridSize) + 1;
+                int y = rand.nextInt(gridSize) + 1;
                 if (lgs[x][y].getGridType() != GridType.TAKEN) {
                     lgs[x][y].color = new Vector4f(0, 0, 1, 1);
                     lgs[x][y].setPosition(new Vector3f(lgs[x][y].getPositionX(), lgs[x][y].getPositionY(), 4));
@@ -121,8 +123,8 @@ public class LevelLogic {
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_SPACE) && controller.powerBoost > 0){
             for (int i = 0; i < 90; i++) {
-                int x = rand.nextInt(38) + 1;
-                int y = rand.nextInt(38) + 1;
+                int x = rand.nextInt(gridSize) + 1;
+                int y = rand.nextInt(gridSize) + 1;
                 if (lgs[x][y].getGridType() != GridType.TAKEN) {
                     lgs[x][y].color = new Vector4f(1, 1, 1, .05f);
                     lgs[x][y].setPosition(new Vector3f(lgs[x][y].getPositionX(), lgs[x][y].getPositionY(), 1));

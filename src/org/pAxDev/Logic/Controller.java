@@ -76,8 +76,8 @@ public class Controller {
                     gs.color = new Vector4f(0,1,0,1);
                     gs.setPosition(new Vector3f(gs.getPositionX(),gs.getPositionY(),5));
                     raiseDif++;
-                    if (raiseDif == 8) {
-                        difficulty++;
+                    if (raiseDif == 20) {
+                       // difficulty++;
                         raiseDif = 0;
                     }
                 }

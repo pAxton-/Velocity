@@ -50,8 +50,9 @@ public class Game {
 	private long lastFrame;
 
     boolean closeProgram = false;
+	private Grid amp2;
 
-	
+
 	public void updateOptions(){
 		
 		options.readFile("options.cfg");
@@ -88,6 +89,7 @@ public class Game {
                     if(mMenu.startGame()) {
                         gameState = GameState.PLAYING;
                         lvl1.endGame = false;
+                        lvl1.controller.difficulty = 1;
                     }
                         if (mMenu.exitGame()){
                             closeProgram = true;
