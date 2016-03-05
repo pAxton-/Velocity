@@ -13,6 +13,7 @@ import java.util.Random;
  * Created by Lance on 3/2/2016.
  */
 public class LevelLogic {
+    Sounds sound;
     Controller controller;
     Entity enty;
     Grid map;
@@ -21,7 +22,8 @@ public class LevelLogic {
     int gridSize;
     public boolean endGame = false;
     double currentTime, currentTimeB;
-    public LevelLogic(Controller controller, Entity enty, Grid map, GridSquare[][] lgs, Random rand, double currentTime, double currentTimeB) {
+    public LevelLogic(Sounds sound,Controller controller, Entity enty, Grid map, GridSquare[][] lgs, Random rand, double currentTime, double currentTimeB) {
+        this.sound = sound;
         this.lgs = lgs;
         this.rand = rand;
         this.currentTime = currentTime;
@@ -55,6 +57,7 @@ public class LevelLogic {
         for (GridSquare[] gsa : map.getGridSquares()) {
             for (GridSquare gs : gsa) {
                     if (gs.getGridType() != GridType.EMPTY) {
+
                     gs.drawPoly();
                 } else {
                     gs.drawTri();
@@ -63,6 +66,7 @@ public class LevelLogic {
             }
         }
         if(getTime() > (currentTimeB + 1000/controller.difficulty) && !controller.isGameOver()){
+            sound.playSquareChangeSound();
             int  x = rand.nextInt(38) +1;
             int  y = rand.nextInt(38) +1;
             for (int i = 0; i < 8; i++) {

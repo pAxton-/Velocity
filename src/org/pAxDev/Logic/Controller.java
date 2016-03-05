@@ -14,6 +14,7 @@ import java.util.ArrayList;
 public class Controller {
     public Entity player;
     Grid map;
+    Sounds sound;
 
     private boolean gameOver = false;
     private boolean allowMove = true;
@@ -21,9 +22,10 @@ public class Controller {
     int raiseDif = 0;
     public int powerBoost = 0;
     ArrayList<GridSquare> oldTakenSquare = new ArrayList<>();
-    public Controller(Entity player, Grid map) {
+    public Controller(Entity player, Grid map, Sounds sound) {
         this.player = player;
         this.map = map;
+        this.sound = sound;
     }
     public  void setGameOver(boolean b) {
         gameOver = b;
@@ -73,6 +75,7 @@ public class Controller {
                     }
 
                     gs.setGridType(GridType.TAKEN);
+                    sound.playTakenSound();
                     gs.color = new Vector4f(0,1,0,1);
                     gs.setPosition(new Vector3f(gs.getPositionX(),gs.getPositionY(),5));
                     raiseDif++;
@@ -86,6 +89,9 @@ public class Controller {
                      player.rot = player.rot + 5;
                     player.scale = new Vector2f(player.scale.x + 0.1f,player.scale.y + 0.1f);
                     difficulty = 1;
+                    if(gameOver == false) {
+                        sound.playLoseSound();
+                    }
                     gameOver = true;
                 }
             }

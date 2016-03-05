@@ -8,6 +8,8 @@ import org.newdawn.slick.opengl.Texture;
 import org.pAxDev.Objects.Entity;
 import org.pAxDev.Util.ImgLoader;
 
+import java.io.FileNotFoundException;
+
 /**
  * Created by Lance on 3/3/2016.
  */
@@ -16,7 +18,9 @@ public class MainMenu {
     Entity quitButton;
     ImgLoader il = new ImgLoader();
 
+
     public MainMenu(Vector3f pos) {
+
         startButton = new Entity(pos, new Vector2f(150,100),new Vector4f(1,1,1,1), null );
         quitButton = new Entity(new Vector3f(pos.x,pos.y-150,pos.z), new Vector2f(150,100),new Vector4f(1,1,1,1), null );
         Texture sbTex = il.loadTexture("start.png", "PNG");

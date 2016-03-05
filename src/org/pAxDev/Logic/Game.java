@@ -26,6 +26,7 @@ import org.pAxDev.Util.ImgLoader;
 import org.pAxDev.Util.Options;
 import org.pAxDev.Util.Screen;
 
+import java.io.FileNotFoundException;
 import java.util.Random;
 
 
@@ -39,6 +40,7 @@ public class Game {
 	
 	Options options = new Options();
 	ImgLoader imgLoader = new ImgLoader();
+    Sounds sound;
 	Screen screen;
 	Camera cam1;
 	GameState gameState = GameState.MENU;
@@ -64,12 +66,18 @@ public class Game {
 		
 		screen = new Screen(options.screenWidth, options.screenHeight, options.frameCap, options.fullscreen, options.vSync, TITLE+" - "+VERSION);
 		cam1 = new Camera(new Vector2f(0,0), new Vector2f(options.screenWidth, options.screenHeight));
-		 enty =  new Entity(new Vector3f(screen.width/2,screen.height/2,5), new Vector2f(10,10), new Vector4f(1,1,1,1), PLAYER);
+        sound = new Sounds();
+        enty =  new Entity(new Vector3f(screen.width/2,screen.height/2,5), new Vector2f(10,10), new Vector4f(1,1,1,1), PLAYER);
         map = new Grid(22,18.5f,options.screenWidth/5,25,40);
 		mMenu = new MainMenu(new Vector3f(screen.width/2,screen.height/2,1));
-	    controller = new Controller(enty, map);
-	
-	}
+	    controller = new Controller(enty, map, sound);
+        try {
+            sound.init();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
 	
 	public void mainLoop(){
 
@@ -78,7 +86,7 @@ public class Game {
 
         double currentTime = getTime();
         double currentTimeB = getTime();
-        lvl1 = new LevelLogic(controller, enty, map, lgs, rand, currentTime, currentTimeB);
+        lvl1 = new LevelLogic(sound,controller, enty, map, lgs, rand, currentTime, currentTimeB);
 		while(!screen.isCloseRequested()){
 
             cam1.update();
@@ -87,6 +95,7 @@ public class Game {
                 case MENU:
                     mMenu.update();
                     if(mMenu.startGame()) {
+                        sound.playButtonSound();
                         gameState = GameState.PLAYING;
                         lvl1.endGame = false;
                         lvl1.controller.difficulty = 1;
@@ -97,6 +106,7 @@ public class Game {
 
                     break;
                 case PLAYING:
+
                     if(!lvl1.endGame) {
                         lvl1.levelUpdate(getDelta());
                     } else {
@@ -114,7 +124,8 @@ public class Game {
 	}
 	
 	public void close(){
-		screen.destroy();
+		sound.destroy();
+        screen.destroy();
 	}
 
 	
