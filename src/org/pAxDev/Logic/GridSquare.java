@@ -4,7 +4,9 @@ import org.lwjgl.input.Mouse;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
+import org.newdawn.slick.opengl.Texture;
 import org.pAxDev.Objects.Entity;
+import org.pAxDev.Util.ImgLoader;
 
 /**
  * Created by Lance Paxton on 2/23/16.
@@ -12,9 +14,12 @@ import org.pAxDev.Objects.Entity;
 public class GridSquare extends Entity {
     Collision collision = new Collision();
     private GridType gridType = GridType.EMPTY;
+    ImgLoader il = new ImgLoader();
+   // Texture texture;
 
     public GridSquare(Vector3f position, Vector2f scale, Vector4f color, Type type) {
         super(position, scale, color, type);
+       texture = il.loadTexture("honey.png", "PNG");
     }
 
     public void setGridType(GridType gt) {

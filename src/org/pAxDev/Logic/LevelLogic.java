@@ -5,7 +5,9 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
+import org.newdawn.slick.opengl.Texture;
 import org.pAxDev.Objects.Entity;
+import org.pAxDev.Util.ImgLoader;
 
 import java.util.Random;
 
@@ -22,6 +24,8 @@ public class LevelLogic {
     int gridSize;
     public boolean endGame = false;
     double currentTime, currentTimeB;
+
+    Texture honeyTex;
     public LevelLogic(Sounds sound,Controller controller, Entity enty, Grid map, GridSquare[][] lgs, Random rand, double currentTime, double currentTimeB) {
         this.sound = sound;
         this.lgs = lgs;
@@ -53,9 +57,28 @@ public class LevelLogic {
             }
         }
         controller.update(delta);
-        enty.draw();
+        enty.drawSprite();
         for (GridSquare[] gsa : map.getGridSquares()) {
             for (GridSquare gs : gsa) {
+                switch (gs.getGridType()) {
+
+                    case BLOCKER:
+                        gs.drawPoly();
+                        break;
+                    case BORDER:
+                        gs.drawPoly();
+                        break;
+                    case EMPTY:
+                        gs.drawTri();
+                        break;
+                    case TOKEN:
+                        gs.drawTextured();
+                        break;
+                    case TAKEN:
+                        gs.drawPoly();
+                        break;
+                }
+                /*
                     if (gs.getGridType() != GridType.EMPTY) {
 
                     gs.drawPoly();
@@ -63,7 +86,10 @@ public class LevelLogic {
                     gs.drawTri();
                 }
                 // gs.collisionCheck(enty);
+                */
+
             }
+
         }
         if(getTime() > (currentTimeB + 1000/controller.difficulty) && !controller.isGameOver()){
             sound.playSquareChangeSound();
@@ -101,7 +127,7 @@ public class LevelLogic {
                 int x = rand.nextInt(gridSize) + 1;
                 int y = rand.nextInt(gridSize) + 1;
                 if (lgs[x][y].getGridType() != GridType.TAKEN) {
-                    lgs[x][y].color = new Vector4f(0, 0, 1, 1);
+                    lgs[x][y].color = new Vector4f(1, 1, 1, 1);
                     lgs[x][y].setPosition(new Vector3f(lgs[x][y].getPositionX(), lgs[x][y].getPositionY(), 4));
                     lgs[x][y].setGridType(GridType.TOKEN);
                 }

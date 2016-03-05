@@ -214,16 +214,20 @@ public class Entity {
 			
 			
 			glTexCoord2f(inc, 0);
-			glVertex2f(0.25f, 0);
+		//	glVertex2f(0.25f, 0);
+		    glVertex3f(-.5f, .5f, 0);
 			
 			glTexCoord2f(inc,0.25f);
-			glVertex2f(0.25f, 0.25f);
+			//glVertex2f(0.25f, 0.25f);
+		    glVertex3f(.5f, .5f, 0);
 			
 			glTexCoord2f(inc +0.25f, 0.25f);
-			glVertex2f(0.25f+0.25f,0.25f);
+			//glVertex2f(0.25f+0.25f,0.25f);
+	    	glVertex3f(.5f, -.5f, 0);
 			
 			glTexCoord2f(inc+0.25f, 0);
-			glVertex2f(0.25f+0.25f, 0);
+			//glVertex2f(0.25f+0.25f, 0);
+	    	glVertex3f(-.5f, -.5f, 0);
 		glEnd();
 		
 		
