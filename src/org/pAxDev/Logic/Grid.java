@@ -11,7 +11,7 @@ public class Grid {
     private GridSquare[][] gridSquares;
     private int size;
 
-    public Grid(float _width, float _height, float _incPx, float _incPy, int size) {
+    public Grid(float _width, float _height, float _incPx, float _incPy, int size, LoadTexture lt) {
         gridSquares = new GridSquare[size][size];
         float width = _width;
         float height = _height;
@@ -26,7 +26,9 @@ public class Grid {
                                                           new Vector3f(incPx, incPy, 1),
                                                           new Vector2f(width, height),
                                                           new Vector4f(1, 1, 1, 0.05f),
-                                                          null
+                                                          null,
+                                                          lt
+
                 );
                 incPx = incPx + width;
                 if (ylop > size - 1) {

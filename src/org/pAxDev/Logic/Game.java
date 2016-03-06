@@ -1,33 +1,25 @@
 package org.pAxDev.Logic;
-import static org.lwjgl.opengl.GL11.GL_QUADS;
-import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glColor4f;
-import static org.lwjgl.opengl.GL11.glEnd;
-import static org.lwjgl.opengl.GL11.glPopMatrix;
-import static org.lwjgl.opengl.GL11.glPushMatrix;
-import static org.lwjgl.opengl.GL11.glRotatef;
-import static org.lwjgl.opengl.GL11.glScalef;
-import static org.lwjgl.opengl.GL11.glTranslatef;
-import static org.lwjgl.opengl.GL11.glVertex3f;
 
 import org.lwjgl.Sys;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.input.Mouse;
+
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
-import org.newdawn.slick.opengl.Texture;
+
 
 import org.pAxDev.Objects.Camera;
 import org.pAxDev.Objects.Entity;
 
 import org.pAxDev.Objects.Entity.Type;
-import org.pAxDev.Util.ImgLoader;
+
 import org.pAxDev.Util.Options;
 import org.pAxDev.Util.Screen;
 
+
 import java.io.FileNotFoundException;
 import java.util.Random;
+
+
 
 
 public class Game {
@@ -39,7 +31,7 @@ public class Game {
 	
 	
 	Options options = new Options();
-	ImgLoader imgLoader = new ImgLoader();
+
     Sounds sound;
 	Screen screen;
 	Camera cam1;
@@ -53,10 +45,11 @@ public class Game {
 
     boolean closeProgram = false;
 	private Grid amp2;
-    Texture playerTex;
+
 	private Grid map2;
 
-	public void updateOptions(){
+
+    public void updateOptions(){
 		
 		options.readFile("src/res/options.cfg");
 		
@@ -67,13 +60,13 @@ public class Game {
 		
 		screen = new Screen(options.screenWidth, options.screenHeight, options.frameCap, options.fullscreen, options.vSync, TITLE+" - "+VERSION);
 		cam1 = new Camera(new Vector2f(0,0), new Vector2f(options.screenWidth, options.screenHeight));
+        LoadTexture lt = new LoadTexture();
         sound = new Sounds();
         enty =  new Entity(new Vector3f(screen.width/2,screen.height/2,5), new Vector2f(60,60), new Vector4f(1,1,1,1), PLAYER);
-        playerTex = imgLoader.loadTexture("src/res/badgerSpreadSheet.png", "PNG");
-        enty.texture = playerTex;
-        map = new Grid(22,18.5f,options.screenWidth/5,25,40);
-		map2 = new Grid(44,37f,options.screenWidth/6,25,20);
-		mMenu = new MainMenu(new Vector3f(screen.width/2,screen.height/2,1));
+        enty.texture =  lt.getTexture(4);
+        map = new Grid(22,18.5f,options.screenWidth/5,25,40, lt);
+		map2 = new Grid(44,37f,options.screenWidth/6,25,20, lt);
+		mMenu = new MainMenu(new Vector3f(screen.width/2,screen.height/2,1), lt);
 	    controller = new Controller(enty, map2, sound);
         try {
             sound.init();
@@ -97,6 +90,7 @@ public class Game {
             switch (gameState){
 
                 case MENU:
+
                     mMenu.update();
                     if(mMenu.startGame()) {
                         sound.playButtonSound();

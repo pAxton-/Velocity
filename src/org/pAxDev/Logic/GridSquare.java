@@ -14,16 +14,19 @@ import org.pAxDev.Util.ImgLoader;
 public class GridSquare extends Entity {
     Collision collision = new Collision();
     private GridType gridType = GridType.EMPTY;
-    ImgLoader il = new ImgLoader();
+    LoadTexture lt;
    // Texture texture;
 
-    public GridSquare(Vector3f position, Vector2f scale, Vector4f color, Type type) {
+    public GridSquare(Vector3f position, Vector2f scale, Vector4f color, Type type, LoadTexture lt) {
         super(position, scale, color, type);
-       texture = il.loadTexture("src/res/honey.png", "PNG");
+       texture = lt.getTexture(0);
     }
 
     public void setGridType(GridType gt) {
         this.gridType = gt;
+        if (gt == GridType.TOKEN) {
+            setTexture(texture);
+        }
     }
 
     public GridType getGridType() {

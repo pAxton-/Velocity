@@ -54,19 +54,8 @@ public class Entity {
 		return false;
 	}
 	
-	boolean isOnClicked(Camera cam, int button){
-		
-		if(isMouseOver(cam)) {
-			active = true;
-			}
-	
-		if(Mouse.isButtonDown(button) && active){
-			return true;
-		}
-		if(!Mouse.isButtonDown(button)){
-			active = false;
-		}
-		return false;
+	public void setTexture(Texture tx) {
+		texture = tx;
 	}
 	
 	public void draw(){

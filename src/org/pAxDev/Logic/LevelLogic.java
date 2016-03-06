@@ -35,7 +35,7 @@ public class LevelLogic {
     public boolean endGame = false;
     double currentTime, currentTimeB;
 
-    Texture honeyTex;
+
     public LevelLogic(Sounds sound,Controller controller, Entity enty, Grid map, GridSquare[][] lgs, Random rand, double currentTime, double currentTimeB) {
         this.sound = sound;
         this.lgs = lgs;
@@ -57,10 +57,7 @@ public class LevelLogic {
         glOrtho(0, 1366,0, 768, -5, 5);
         glMatrixMode(GL_MODELVIEW);
         if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) ) {
-            glMatrixMode(GL_PROJECTION);
-            glLoadIdentity();
-            glOrtho(0, 1366,0, 768, -5, 5);
-            glMatrixMode(GL_MODELVIEW);
+
             endGame = true;
             for (GridSquare[] gsa : map.getGridSquares()) {
                 for (GridSquare gs : gsa) {
