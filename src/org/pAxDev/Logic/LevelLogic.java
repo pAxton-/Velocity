@@ -5,16 +5,25 @@ import org.lwjgl.input.Keyboard;
 import org.lwjgl.util.vector.Vector2f;
 import org.lwjgl.util.vector.Vector3f;
 import org.lwjgl.util.vector.Vector4f;
+import org.newdawn.slick.TrueTypeFont;
+import org.newdawn.slick.Color;
 import org.newdawn.slick.opengl.Texture;
 import org.pAxDev.Objects.Entity;
 import org.pAxDev.Util.ImgLoader;
 
+import java.awt.Font;
 import java.util.Random;
+
+import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
+import static org.lwjgl.opengl.GL11.glMatrixMode;
 
 /**
  * Created by Lance on 3/2/2016.
  */
 public class LevelLogic {
+    private final TrueTypeFont font;
+    private final boolean antiAlias = true;
     Sounds sound;
     Controller controller;
     Entity enty;
@@ -22,6 +31,7 @@ public class LevelLogic {
     GridSquare[][] lgs;
     Random rand;
     int gridSize;
+    public Integer score = 0;
     public boolean endGame = false;
     double currentTime, currentTimeB;
 
@@ -36,10 +46,21 @@ public class LevelLogic {
         this.enty = enty;
         this.map = map;
         gridSize = map.getSize()-2;
+
+        Font awtFont = new Font("Times New Roman", Font.BOLD, 24);
+        font = new TrueTypeFont(awtFont, antiAlias);
     }
 
     public void levelUpdate(int delta) {
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho(0, 1366,0, 768, -5, 5);
+        glMatrixMode(GL_MODELVIEW);
         if (Keyboard.isKeyDown(Keyboard.KEY_ESCAPE) ) {
+            glMatrixMode(GL_PROJECTION);
+            glLoadIdentity();
+            glOrtho(0, 1366,0, 768, -5, 5);
+            glMatrixMode(GL_MODELVIEW);
             endGame = true;
             for (GridSquare[] gsa : map.getGridSquares()) {
                 for (GridSquare gs : gsa) {
@@ -148,7 +169,7 @@ public class LevelLogic {
                         gs.color = new Vector4f(1, 1, 1, .05f);
                         gs.setPosition(new Vector3f(gs.getPositionX(), gs.getPositionY(), 1));
                         gs.setGridType(GridType.EMPTY);
-                        controller.player.scale = new Vector2f(40, 40);
+                        controller.player.scale = new Vector2f(60, 60);
                         controller.player.color = new Vector4f(1, 1, 1, 1);
                         controller.player.rot = 0;
                         controller.player.setPosition(new Vector3f(700,400,5));
@@ -172,7 +193,16 @@ public class LevelLogic {
                 controller.powerBoost = 0;
             }
         }
+
         enty.drawSprite();
+        Color.white.bind();
+        score = controller.score * 10;
+
+        glMatrixMode(GL_PROJECTION);
+        glLoadIdentity();
+        glOrtho(0, 1366,768, 0, -5, 5);
+        glMatrixMode(GL_MODELVIEW);
+        font.drawString(1250, 700, "Score: " + score.toString(), Color.yellow);
     }
     public long getTime() {
         return (Sys.getTime() * 1000) / Sys.getTimerResolution();

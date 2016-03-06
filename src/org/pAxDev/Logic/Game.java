@@ -68,7 +68,7 @@ public class Game {
 		screen = new Screen(options.screenWidth, options.screenHeight, options.frameCap, options.fullscreen, options.vSync, TITLE+" - "+VERSION);
 		cam1 = new Camera(new Vector2f(0,0), new Vector2f(options.screenWidth, options.screenHeight));
         sound = new Sounds();
-        enty =  new Entity(new Vector3f(screen.width/2,screen.height/2,5), new Vector2f(40,40), new Vector4f(1,1,1,1), PLAYER);
+        enty =  new Entity(new Vector3f(screen.width/2,screen.height/2,5), new Vector2f(60,60), new Vector4f(1,1,1,1), PLAYER);
         playerTex = imgLoader.loadTexture("src/res/badgerSpreadSheet.png", "PNG");
         enty.texture = playerTex;
         map = new Grid(22,18.5f,options.screenWidth/5,25,40);

@@ -15,6 +15,7 @@ public class Controller {
     public Entity player;
     Grid map;
     Sounds sound;
+    public Integer score = 0;
 
     private boolean gameOver = false;
     private boolean allowMove = true;
@@ -84,11 +85,12 @@ public class Controller {
 
                     gs.setGridType(GridType.TAKEN);
                     sound.playTakenSound();
+                    score++;
                     gs.color = new Vector4f(0,1,0,1);
                     gs.setPosition(new Vector3f(gs.getPositionX(),gs.getPositionY(),4));
                     raiseDif++;
                     if (raiseDif == 4) {
-                        //difficulty++;
+                        difficulty++;
                         raiseDif = 0;
                     }
                 }
